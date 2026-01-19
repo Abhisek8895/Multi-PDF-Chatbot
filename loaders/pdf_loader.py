@@ -1,14 +1,8 @@
-from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader # type: ignore
 import os
 
 
 def load_multiple_pdfs(pdf_dir: str):
-    """
-    Docstring for load_multiple_pdfs
-    
-    :param pdf_dir: Description
-    :type pdf_dir: str
-    """
     documents = []
 
     for file_name in os.listdir(pdf_dir):
