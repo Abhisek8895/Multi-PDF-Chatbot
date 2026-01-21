@@ -1,12 +1,11 @@
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from config.config import GEMENI_API_KEY, EMBEDDING_MODEL
+# from langchain_community.embeddings import HuggingFaceEmbeddings 
+from langchain_huggingface import HuggingFaceEmbeddings # type: ignore
 
 
 def get_embedding_model():
     """
-    Returns Gemini embedding model
+    Local embedding model
     """
-    return GoogleGenerativeAIEmbeddings(
-        model=EMBEDDING_MODEL,
-        google_api_key=GEMENI_API_KEY
+    return HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
