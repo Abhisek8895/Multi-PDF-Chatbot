@@ -10,3 +10,5 @@ LLM_MODEL = "gemini-1.5-flash"
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
+
+DB_PATH = "vectorstore/faiss_index"
