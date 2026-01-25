@@ -1,9 +1,10 @@
 import os
 from langchain_community.vectorstores import FAISS # type: ignore
 from embeddings.embedding_model import get_embedding_model
+from config.config import DB_PATH
 
-
-def create_faiss_db(chunks, db_path="vectorstore/faiss_index"):
+db_path = DB_PATH
+def create_faiss_db(chunks, db_path):
     """
     Create and save FAISS vector database
     """
@@ -13,7 +14,7 @@ def create_faiss_db(chunks, db_path="vectorstore/faiss_index"):
     return vector_db
 
 
-def load_faiss_db(db_path="vectorstore/faiss_index"):
+def load_faiss_db(db_path):
     """
     Load existing FAISS vector database
     """
