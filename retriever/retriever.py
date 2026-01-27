@@ -1,8 +1,5 @@
 from vectorstore.faiss_db import load_faiss_db
 
-#  Load FAISS vector store
-_vectorstore = load_faiss_db()
-
 
 def retrieve_documents(query: str, top_k: int = 3):
     """
@@ -12,8 +9,13 @@ def retrieve_documents(query: str, top_k: int = 3):
     if not query or not isinstance(query, str):
         return []
 
-    # Perform similarity search
-    retrieved_docs = _vectorstore.similarity_search(
+    # Load FAISS at runtime (NOT at import time)
+    vectorstore = load_faiss_db()
+
+    if vectorstore is None:
+        return []
+
+    retrieved_docs = vectorstore.similarity_search(
         query=query,
         k=top_k
     )
