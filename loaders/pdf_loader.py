@@ -1,18 +1,26 @@
 from langchain_community.document_loaders import PyPDFLoader # type: ignore
 import os
+import tempfile
 
 
-def load_multiple_pdfs(pdf_dir: str):
+def load_multiple_pdfs(uploaded_files):
     documents = []
 
-    for file_name in os.listdir(pdf_dir):
-        if file_name.endswith(".pdf"):
-            file_path = os.path.join(pdf_dir, file_name)
-            loader = PyPDFLoader(file_path)
-            pdf_docs = loader.load()
+    for uploaded_file in uploaded_files:
+        # Create a temporary file for each uploaded PDF
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+            tmp_file.write(uploaded_file.read())
+            tmp_file_path = tmp_file.name
 
-            for doc in pdf_docs:
-                doc.metadata["source"] = file_name
-                documents.append(doc)
+        # Load PDF using PyPDFLoader
+        loader = PyPDFLoader(tmp_file_path)
+        pdf_docs = loader.load()
+
+        for doc in pdf_docs:
+            doc.metadata["source"] = uploaded_file.name
+            documents.append(doc)
+
+        # Clean up temp file
+        os.remove(tmp_file_path)
 
     return documents
